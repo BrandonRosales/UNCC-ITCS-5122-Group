@@ -19,23 +19,7 @@ uv sync
 uv run streamlit run app.py
 ```
 
-To enable the AI Risk Analyst tab, set your Google API key before running:
-
-**Bash:**
-```bash
-export GOOGLE_API_KEY="AIza..."
-uv run streamlit run app.py
-```
-
-**PowerShell:**
-```powershell
-$env:GOOGLE_API_KEY = "AIza..."
-uv run streamlit run app.py
-```
-
-Optional: override the Gemini model with `GOOGLE_GEMINI_MODEL` if you need to pin a specific release. The app defaults to `gemini-2.5-flash`.
-
-Or copy `.streamlit/secrets.toml.example` to `.streamlit/secrets.toml` and fill in your key.
+To enable the AI Risk Analyst tab, provide `GOOGLE_API_KEY` before running the app. The app now loads a local `.env` file automatically, and you can also set the variable in your shell or copy `.streamlit/secrets.toml.example` to `.streamlit/secrets.toml` and fill in your key.
 
 The app fetches IRS data directly from [irs.gov](https://www.irs.gov/pub/irs-soi/) on first load (~2 minutes for 5 years), then caches to disk (`.data_cache/`) so subsequent runs are instant.
 
