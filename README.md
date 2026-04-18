@@ -10,7 +10,14 @@ Streamlit app for investment bank risk analysts to identify ZIP codes experienci
 
 [Add Streamlit Cloud URL after deployment]
 
-## Local Setup Instructions
+## Setup
+
+### Local development
+1. Install `uv` on your machine.
+2. Clone the repository and enter the project folder.
+3. Run `uv sync` to create/update `.venv` and install dependencies from `pyproject.toml`.
+4. Provide `GOOGLE_API_KEY` before starting the app.
+5. Run `uv run streamlit run app.py`.
 
 ```bash
 git clone https://github.com/brandonrosales/UNCC-ITCS-5122-Group.git
@@ -19,7 +26,20 @@ uv sync
 uv run streamlit run app.py
 ```
 
-To enable the AI Risk Analyst tab, provide `GOOGLE_API_KEY` before running the app. The app now loads a local `.env` file automatically, and you can also set the variable in your shell or copy `.streamlit/secrets.toml.example` to `.streamlit/secrets.toml` and fill in your key.
+Credential options for local runs:
+- Preferred: add `GOOGLE_API_KEY` (and optional `GOOGLE_GEMINI_MODEL`) to `.env` in the project root.
+- Alternative: set `GOOGLE_API_KEY` in your shell.
+- Alternative: create `.streamlit/secrets.toml` from `.streamlit/secrets.toml.example`.
+
+Notes:
+- If you use `uv run`, you do not need to activate `.venv` manually.
+- You do not need to manually install `requirements.txt` for local uv workflow.
+
+### Streamlit Cloud deployment
+- Streamlit Cloud installs dependencies from `requirements.txt`.
+- Local `.env` files are not used on Streamlit Cloud.
+- Configure `GOOGLE_API_KEY` in Streamlit secrets (use `.streamlit/secrets.toml.example` as a template).
+- Keep `pyproject.toml` and `requirements.txt` in sync so local and cloud environments match.
 
 The app fetches IRS data directly from [irs.gov](https://www.irs.gov/pub/irs-soi/) on first load (~2 minutes for 5 years), then caches to disk (`.data_cache/`) so subsequent runs are instant.
 

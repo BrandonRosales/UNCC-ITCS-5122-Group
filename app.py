@@ -91,8 +91,9 @@ with st.sidebar:
     selected_states = st.multiselect(
         "State(s)",
         options=ALL_STATES,
-        default=ALL_STATES,
-        help="Filter by state(s). Leave all selected for national view.",
+        default=[],
+        placeholder="All states (none selected)",
+        help="Select one or more states. If none are selected, all states are included.",
     )
 
     min_returns = st.slider(
@@ -146,18 +147,24 @@ if filtered.empty:
 
 st.caption(f"Showing **{len(filtered):,}** ZIP codes after filters applied.")
 
-# ── Tabs ─────────────────────────────────────────────────────────────
-tab1, tab2, tab3 = st.tabs([
-    "Phase 1 — AGI Growth Analysis",
-    "Phase 2 — IQRI (Income Quality Index)",
-    "AI Risk Analyst",
-])
+# ── Analysis View Selector (persists across reruns) ─────────────────
+view = st.radio(
+    "Analysis view",
+    options=[
+        "Phase 1 — AGI Growth Analysis",
+        "Phase 2 — IQRI (Income Quality Index)",
+        "AI Risk Analyst",
+    ],
+    horizontal=True,
+    label_visibility="collapsed",
+    key="active_analysis_view",
+)
 
-with tab1:
+if view == "Phase 1 — AGI Growth Analysis":
     render_phase1(filtered, trend_filtered, top_n)
 
-with tab2:
+elif view == "Phase 2 — IQRI (Income Quality Index)":
     render_phase2(filtered, trend_filtered, top_n)
 
-with tab3:
+else:
     render_ai_analyst(filtered, trend_filtered)
