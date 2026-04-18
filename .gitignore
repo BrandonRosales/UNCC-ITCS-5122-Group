@@ -1,3 +1,6 @@
 IRS_Wealth_Analysis_Project
 __pycache__/
 .data_cache/
+.env
+.venv/
+.streamlit/secrets.toml

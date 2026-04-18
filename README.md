@@ -1,21 +1,43 @@
 # Team 10 — Economic Recovery Trackers
 
-**ITCS 5122 Visual Analytics | UNCC | Spring 2026**
+## Project Description
 
-**Role:** Investment Bank Risk Analysts
-**Business Problem:** Identify ZIP codes experiencing wealth exodus vs. economic growth to guide lending decisions.
-**Data:** IRS Statistics of Income (SOI) ZIP-level tax returns — 5-year window (2018–2022).
+Streamlit app for investment bank risk analysts to identify ZIP codes experiencing wealth exodus vs. economic growth. Analyzes 5 years of IRS Statistics of Income (SOI) ZIP-level tax data (27,000+ ZIPs, 2018–2022) across three phases: AGI CAGR growth analysis (Phase 1), Income Quality & Resilience Index (Phase 2), and an AI-powered lending risk memo generator using Google Gemini (Phase 3).
 
----
+**ITCS 5122 Visual Analytics | UNCC | Spring 2026 | Team 10**
 
-## How to Run
+## App Deployment URL
+
+[Add Streamlit Cloud URL after deployment]
+
+## Local Setup Instructions
 
 ```bash
-pip install -r requirements.txt
-streamlit run app.py
+git clone https://github.com/brandonrosales/UNCC-ITCS-5122-Group.git
+cd UNCC-ITCS-5122-Group
+uv sync
+uv run streamlit run app.py
 ```
 
+To enable the AI Risk Analyst tab, set your Google API key before running:
+
+**Bash:**
+```bash
+export GOOGLE_API_KEY="AIza..."
+uv run streamlit run app.py
+```
+
+**PowerShell:**
+```powershell
+$env:GOOGLE_API_KEY = "AIza..."
+uv run streamlit run app.py
+```
+
+Or copy `.streamlit/secrets.toml.example` to `.streamlit/secrets.toml` and fill in your key.
+
 The app fetches IRS data directly from [irs.gov](https://www.irs.gov/pub/irs-soi/) on first load (~2 minutes for 5 years), then caches to disk (`.data_cache/`) so subsequent runs are instant.
+
+---
 
 ## Project Structure
 
@@ -25,8 +47,10 @@ The app fetches IRS data directly from [irs.gov](https://www.irs.gov/pub/irs-soi
 ├── data_loader.py    # IRS data fetching, caching, AGI/IQRI computation
 ├── phase1.py         # Phase 1 visualizations (AGI growth analysis)
 ├── phase2.py         # Phase 2 visualizations (IQRI income quality index)
+├── phase3.py         # Phase 3 AI Risk Analyst (Gemini-powered lending memos)
 ├── utils.py          # Color palettes, constants, IRS URLs
-├── requirements.txt  # Python dependencies
+├── requirements.txt  # Python dependencies (Streamlit Cloud)
+├── pyproject.toml    # uv project file
 └── README.md         # This file
 ```
 

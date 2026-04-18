@@ -33,6 +33,7 @@ st.markdown(
 from data_loader import build_comparison
 from phase1 import render_phase1
 from phase2 import render_phase2
+from phase3 import render_ai_analyst
 from utils import BASELINE_YEAR, LATEST_YEAR, ANALYSIS_YEARS
 
 # ── Header ───────────────────────────────────────────────────────────
@@ -41,6 +42,17 @@ st.markdown(
     f"**Team 10 · Investment Bank Risk Analysis** · "
     f"IRS Statistics of Income ZIP-level data ({BASELINE_YEAR}–{LATEST_YEAR}, "
     f"{len(ANALYSIS_YEARS)}-year window)"
+)
+
+st.info(
+    "**Client:** Investment bank lending team  \n"
+    "**Business Problem:** Lending in economically shrinking ZIP codes exposes the bank to elevated "
+    "default risk as local wealth erodes. We need to know *where* wealth is fleeing before we lend.  \n"
+    "**Solution:** 5 years of IRS ZIP-level tax data (27,000+ ZIPs) analyzed to identify wealth exodus "
+    "vs. booming areas — with AI-generated risk memos for individual ZIP decisions.  \n"
+    "**Phase 1** — AGI CAGR: which ZIPs are growing or shrinking?  "
+    "**Phase 2** — IQRI: how resilient is each ZIP's income?  "
+    "**Phase 3** — AI Risk Analyst: instant lending brief for any ZIP."
 )
 
 # ── Load Data with visible progress ─────────────────────────────────
@@ -132,9 +144,10 @@ if filtered.empty:
 st.caption(f"Showing **{len(filtered):,}** ZIP codes after filters applied.")
 
 # ── Tabs ─────────────────────────────────────────────────────────────
-tab1, tab2 = st.tabs([
+tab1, tab2, tab3 = st.tabs([
     "Phase 1 — AGI Growth Analysis",
     "Phase 2 — IQRI (Income Quality Index)",
+    "AI Risk Analyst",
 ])
 
 with tab1:
@@ -142,3 +155,6 @@ with tab1:
 
 with tab2:
     render_phase2(filtered, trend_filtered, top_n)
+
+with tab3:
+    render_ai_analyst(filtered, trend_filtered)
