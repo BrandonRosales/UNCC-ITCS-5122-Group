@@ -4,6 +4,9 @@ from google import genai
 from utils import BASELINE_YEAR, LATEST_YEAR
 
 
+DEFAULT_GEMINI_MODEL = os.environ.get("GOOGLE_GEMINI_MODEL", "gemini-2.5-flash")
+
+
 def render_ai_analyst(df, trend_df):
     st.header("AI Risk Analyst — ZIP Code Lending Brief")
     st.caption(
@@ -74,7 +77,7 @@ Be concise and professional. Ground every claim in the data provided."""
         with st.spinner("Analyzing ZIP code..."):
             client = genai.Client(api_key=api_key)
             response = client.models.generate_content(
-                model="gemini-2.0-flash",
+                model=DEFAULT_GEMINI_MODEL,
                 contents=prompt,
             )
         st.markdown("---")
