@@ -99,9 +99,9 @@ with st.sidebar:
     min_returns = st.slider(
         f"Min. Returns (N1, {LATEST_YEAR})",
         min_value=0,
-        max_value=2000,
-        value=100,
-        step=50,
+        max_value=60000,
+        value=2000,
+        step=100,
         help="Exclude low-population ZIPs to reduce noise.",
     )
 
@@ -114,9 +114,12 @@ with st.sidebar:
 
     st.divider()
     st.markdown("### Data Sources")
+    source_links = "\n".join(
+        f"- [IRS SOI {year}](https://www.irs.gov/pub/irs-soi/{str(year)[2:]}zpallagi.csv)"
+        for year in sorted(ANALYSIS_YEARS, reverse=True)
+    )
     st.markdown(
-        f"- [IRS SOI {LATEST_YEAR}](https://www.irs.gov/pub/irs-soi/{str(LATEST_YEAR)[2:]}zpallagi.csv)\n"
-        f"- [IRS SOI {BASELINE_YEAR}](https://www.irs.gov/pub/irs-soi/{str(BASELINE_YEAR)[2:]}zpallagi.csv)\n"
+        f"{source_links}\n"
         f"- Years loaded: **{', '.join(str(y) for y in ANALYSIS_YEARS)}**"
     )
     st.markdown(
