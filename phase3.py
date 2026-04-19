@@ -67,7 +67,7 @@ Structure the memo as:
 Be concise and professional. Ground every claim in the data provided."""
 
         try:
-            api_key = st.secrets.get("GOOGLE_API_KEY", "") or os.environ.get("GOOGLE_API_KEY", "")
+            api_key = st.secrets.get("GOOGLE_API_KEY", "") or os.environ.get("GOOGLE_API_KEY", "") or st.secrets["GOOGLE_API_KEY"]
         except Exception:
             api_key = os.environ.get("GOOGLE_API_KEY", "")
         if not api_key:
